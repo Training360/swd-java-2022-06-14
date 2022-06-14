@@ -22,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // Teszt osztály
 @Slf4j
-@ExtendWith(SeleniumExtension.class)
+@SeleniumTest
+@ExtendWith(LoggingExtension.class)
 class WebsiteTest {
 
 //    private static final Logger log = LoggerFactory.getLogger(WebsiteTest.class);
