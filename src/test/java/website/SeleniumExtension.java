@@ -35,7 +35,9 @@ public class SeleniumExtension implements BeforeEachCallback, BeforeAllCallback,
         // the initialization phase of your application
         SLF4JBridgeHandler.install();
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
+        options.setExperimentalOption("excludeSwitches", List.of("enable-automation", "enable-logging"));
+        options.addArguments("--silent", "headless", "loglevel=3", "--disable-logging");
+
         driver = new ChromeDriver(options);
         driver.get("https://www.python.org");
     }
