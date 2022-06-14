@@ -32,6 +32,7 @@ class WebsiteTest {
     @Test
     void testSearch(WebDriver driver) {
         // Given
+        driver.get("https://www.python.org");
 
         // When
         driver.findElement(By.id("id-search-field")).click();
@@ -46,6 +47,7 @@ class WebsiteTest {
 
     @Test
     void testPsf(WebDriver driver) {
+        driver.get("https://www.python.org");
         driver.findElement(By.linkText("PSF")).click();
         log.debug("Click on PDF menu item");
         assertEquals("Python Software Foundation", driver.getTitle());
