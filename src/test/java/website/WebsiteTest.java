@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,39 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // Teszt osztály
 @Slf4j
+@ExtendWith(SeleniumExtension.class)
 class WebsiteTest {
 
 //    private static final Logger log = LoggerFactory.getLogger(WebsiteTest.class);
 
-    WebDriver driver;
-
-    @BeforeAll
-    static void initWebDriverManager() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeEach
-    void initDriver() {
-        System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-        // Optionally remove existing handlers attached to j.u.l root logger
-        SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
-        // add SLF4JBridgeHandler to j.u.l's root logger, should be done once during
-        // the initialization phase of your application
-        SLF4JBridgeHandler.install();
-        ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
-        driver = new ChromeDriver(options);
-        driver.get("https://www.python.org");
-    }
-
-    @AfterEach
-    void quitDriver() {
-        driver.quit();
-    }
-
     // Teszteset
     @Test
-    void testSearch() {
+    void testSearch(WebDriver driver) {
         // Given
 
         // When
@@ -68,7 +44,7 @@ class WebsiteTest {
     }
 
     @Test
-    void testPsf() {
+    void testPsf(WebDriver driver) {
         driver.findElement(By.linkText("PSF")).click();
         log.debug("Click on PDF menu item");
         assertEquals("Python Software Foundation", driver.getTitle());
