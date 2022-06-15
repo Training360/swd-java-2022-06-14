@@ -1,5 +1,6 @@
 package website;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,13 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IndexTest {
 
     @Test
+    @DisplayName("Test setting the border of the input element")
     void testSetBorder(WebDriver webDriver) {
         webDriver.get("http://127.0.0.1:5500/index.html");
-        WebElement input = webDriver.findElement(By.id("field-to-validate"));
-        String value = input.getText();
-        if (value.equals("")) {
+        var input = webDriver.findElement(By.id("field-to-validate"));
+        var value = input.getText();
+        if (Integer.parseInt(value) != 100) {
             ((JavascriptExecutor) webDriver).executeScript(
-                    "arguments[0].style['border'] = '3px solid red';", input);
+                 """
+                        arguments[0].style['border'] = '3px solid red';
+                        arguments[0].style['border'] = '3px solid red';
+                        arguments[0].style['border'] = '3px solid red';
+                        arguments[0].style['border'] = '3px solid red';
+                        """, input);
         }
         System.out.println("End");
     }
