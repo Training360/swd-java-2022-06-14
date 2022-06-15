@@ -43,10 +43,10 @@
 		</table>
 
 		<p>Form Elements</p>
-		<form id="myform">
+		<form id="myform" method="post">
 			<input type="text" name="text" value="" placeholder="Input Text Here"><br>
 			<input type="password" name="password" value=""><br>
-			<input type="checkbox" name="checkbox"> Check It<br>
+			<input type="checkbox" name="checkbox" id="checkbox1"><label for="checkbox1">Check It</label><br>
 			<input type="checkbox" name="disabled-checkbox" disabled="true"> Check It<br>
 			<select name="select" id="dropdown">
 				<option value="option1">Option 1</option>
@@ -63,7 +63,10 @@
 			<input type="radio" id="radiobtn1" name="radio" value="radio1"> Radio 1<br>
 			<input type="radio" name="radio" value="radio2"> Radio 2<br>
 			<textarea name="textarea" style="margin: 0px; width: 299px; height: 135px;"></textarea><br>
+			
 			<input type="submit" id="submitbtn" value="Submit">
+			
+			<button>Submit <b>this</b></button>
 		</form>
 	</div>
 
