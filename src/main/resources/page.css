@@ -9,3 +9,8 @@ h1 {
 .product {
     text-decoration-line: underline;
 }
+
+.lorem:first-line {
+    color:blueviolet;
+    border-left: 10px;
+}
