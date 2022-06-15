@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 @SeleniumTest
 class IndexTest {
@@ -19,7 +20,8 @@ class IndexTest {
     void testSetBorder(WebDriver webDriver) {
         webDriver.get("http://127.0.0.1:5500/index.html");
         var input = webDriver.findElement(By.id("field-to-validate"));
-        var value = input.getText();
+        var value = input.getDomProperty("value");
+        System.out.println("Value: " + value);
         if (Integer.parseInt(value) != 100) {
             ((JavascriptExecutor) webDriver).executeScript(
                  """
@@ -46,6 +48,15 @@ class IndexTest {
 
 
         assertEquals("Hello John!", message);
+    }
+
+    @Test
+    void testDayOfBirth(WebDriver webDriver) {
+        webDriver.get("http://127.0.0.1:5500/index.html");
+        var label = webDriver.findElement(By.tagName("label"));
+        var input = webDriver.findElement(with(By.tagName("input")).below(label));
+        input.sendKeys("hello");
+        System.out.println("end");
     }
 
     WebElement findButtonByText(WebDriver webDriver, String text) {
