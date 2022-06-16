@@ -24,6 +24,12 @@ class TrainingTest {
         driver.get("https://training360.com");
         var wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         var modal = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("NewsletterModal"))));
+
+        wait.until(d -> {
+            log.debug("Check opacity");
+            return modal.getCssValue("opacity").equals("1");
+        });
+
         log.debug("Modal has appeared");
 
         // Felesleges, hiszen a wait úgyis TimeoutException-t dobna, ha nem jelenne meg
