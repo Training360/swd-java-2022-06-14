@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,5 +70,24 @@ class LocationsTest {
         Location created = page.waitForLocationAppears(name);
 
         assertEquals("1, 1", created.getCoords());
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/MOCK_DATA.csv", numLinesToSkip = 1)
+    void testCreateLocationDDT(String name, String lat, String lon) {
+        log.debug("Location: {} ({}, {})", name, lat, lon);
+
+        page
+                .go()
+                .clickOnCreateLocationLink()
+                .fillForm(name, lat + "," + lon)
+                .clickOnCreateButton();
+    }
+
+    @Test
+    void testEdit() {
+        var fixture = new LocationDatabaseFixture();
+        fixture.deleteLocations();
+        fixture.createLocation("Test Location Name", 10, 10);
     }
 }
