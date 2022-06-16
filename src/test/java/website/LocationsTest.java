@@ -1,6 +1,7 @@
 package website;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -21,6 +22,7 @@ class LocationsTest {
 
     @Test
     @DisplayName("Create location, assert message, then find in table")
+    // SOHA NE ÍRJUNK ILYEN TESZTET!
     void testCreate(WebDriver driver) {
         driver = new EventFiringDecorator(new ElementFoundEventListener()).decorate(driver);
 
@@ -41,11 +43,30 @@ class LocationsTest {
                 ExpectedConditions.visibilityOf(driver.findElement(By.id("message-div"))));
         assertEquals("Location has been created", message.getText());
 
-        wait.until(d ->
-                d.findElements(By.cssSelector("tr > td:nth-child(2)"))
-                        .stream().map(WebElement::getText)
-                        .filter(t -> t.equals(name)).count() == 1
-                );
 
+    }
+
+    LocationsPageObject page;
+
+    @BeforeEach
+    void initPage(WebDriver driver) {
+        page = new LocationsPageObject(driver);
+    }
+
+    @Test
+    void testCreateWithPageObject() {
+        // Ne hivatkozzunk WebDriverre, mert a helye a page objectben van
+        var name = "Test Location " + UUID.randomUUID();
+        page
+            .go()
+            .clickOnCreateLocationLink()
+            .fillForm(name)
+            .clickOnCreateButton();
+
+
+        assertEquals("Location has been created", page.waitForMessageAndGetText());
+        Location created = page.waitForLocationAppears(name);
+
+        assertEquals("1, 1", created.getCoords());
     }
 }
